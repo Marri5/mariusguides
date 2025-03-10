@@ -1,0 +1,68 @@
+<header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <div class="logo">
+        <a href="/">
+          <h1>Marius<span>Guides</span></h1>
+        </a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">Home</a></li>
+          <li><a href="/about" class="<%= currentPath === '/about' ? 'active' : '' %>">About</a></li>
+          <li><a href="/contact" class="<%= currentPath === '/contact' ? 'active' : '' %>">Contact</a></li>
+          <% if (user && user.role === 'admin') { %>
+            <li><a href="/admin" class="<%= currentPath.startsWith('/admin') ? 'active' : '' %>">Admin</a></li>
+          <% } %>
+        </ul>
+      </nav>
+      
+      <div class="user-actions">
+        <% if (user) { %>
+          <div class="user-menu">
+            <button class="user-menu-btn">
+              <img src="<%= user.avatar %>" alt="<%= user.name %>" class="avatar">
+              <span><%= user.name %></span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a href="/auth/profile"><i class="fas fa-user"></i> Profile</a>
+              <% if (user.role === 'admin') { %>
+                <a href="/admin"><i class="fas fa-cog"></i> Admin</a>
+              <% } %>
+              <a href="/auth/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </div>
+        <% } else { %>
+          <a href="/auth/login" class="btn btn-outline">Login</a>
+          <a href="/auth/register" class="btn btn-primary">Register</a>
+        <% } %>
+        
+        <button class="mobile-menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu">
+  <ul>
+    <li><a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">Home</a></li>
+    <li><a href="/about" class="<%= currentPath === '/about' ? 'active' : '' %>">About</a></li>
+    <li><a href="/contact" class="<%= currentPath === '/contact' ? 'active' : '' %>">Contact</a></li>
+    <% if (user) { %>
+      <li><a href="/auth/profile">Profile</a></li>
+      <% if (user.role === 'admin') { %>
+        <li><a href="/admin">Admin</a></li>
+      <% } %>
+      <li><a href="/auth/logout">Logout</a></li>
+    <% } else { %>
+      <li><a href="/auth/login">Login</a></li>
+      <li><a href="/auth/register">Register</a></li>
+    <% } %>
+  </ul>
+</div> 

@@ -1,0 +1,107 @@
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Welcome to Marius Guides</h1>
+      <p>Your source for high-quality educational content</p>
+      <div class="hero-buttons">
+        <a href="#featured-guides" class="btn btn-primary">Explore Guides</a>
+        <a href="/about" class="btn btn-outline">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="featured-guides" class="featured-guides">
+  <div class="container">
+    <div class="section-header">
+      <h2>Featured Guides</h2>
+      <p>Explore our latest educational content</p>
+    </div>
+    
+    <div class="guides-grid">
+      <% if (featuredGuides && featuredGuides.length > 0) { %>
+        <% featuredGuides.forEach(guide => { %>
+          <div class="guide-card">
+            <div class="guide-thumbnail">
+              <img src="<%= guide.thumbnail %>" alt="<%= guide.title %>">
+            </div>
+            <div class="guide-content">
+              <h3><%= guide.title %></h3>
+              <p><%= guide.description.length > 120 ? guide.description.substring(0, 120) + '...' : guide.description %></p>
+              <div class="guide-meta">
+                <span class="author">By <%= guide.author.name %></span>
+                <span class="date"><%= new Date(guide.createdAt).toLocaleDateString() %></span>
+              </div>
+              <a href="/guides/<%= guide.slug %>" class="btn btn-secondary">Read Guide</a>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="no-guides">
+          <p>No guides available yet. Check back soon!</p>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Create Your Own Educational Content</h2>
+      <p>Join our platform and share your knowledge with the world</p>
+      <% if (typeof user !== 'undefined' && user) { %>
+        <% if (user.role === 'admin') { %>
+          <a href="/admin/guides/create" class="btn btn-primary">Create a Guide</a>
+        <% } else { %>
+          <a href="/contact" class="btn btn-primary">Become a Contributor</a>
+        <% } %>
+      <% } else { %>
+        <a href="/auth/register" class="btn btn-primary">Get Started</a>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="section-header">
+      <h2>Why Choose Marius Guides?</h2>
+      <p>Our platform offers everything you need to create and consume educational content</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-book"></i>
+        </div>
+        <h3>Comprehensive Guides</h3>
+        <p>Access detailed, step-by-step guides on a variety of topics</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-video"></i>
+        </div>
+        <h3>Video Content</h3>
+        <p>Learn through engaging video tutorials and demonstrations</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-code"></i>
+        </div>
+        <h3>Code Examples</h3>
+        <p>See real-world code examples and implementations</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>Community</h3>
+        <p>Join a community of learners and educators</p>
+      </div>
+    </div>
+  </div>
+</section> 

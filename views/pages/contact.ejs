@@ -1,0 +1,149 @@
+<div class="page-header">
+  <div class="container">
+    <h1>Contact Us</h1>
+    <p>Get in touch with the Marius Guides team</p>
+  </div>
+</div>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-content">
+      <div class="contact-info">
+        <h2>Get In Touch</h2>
+        <p>Have questions, feedback, or suggestions? We'd love to hear from you! Fill out the form and we'll get back to you as soon as possible.</p>
+        
+        <div class="contact-methods">
+          <div class="contact-method">
+            <div class="method-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="method-details">
+              <h3>Email</h3>
+              <p>info@mariusguides.com</p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="method-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="method-details">
+              <h3>Phone</h3>
+              <p>+1 (123) 456-7890</p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="method-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="method-details">
+              <h3>Address</h3>
+              <p>123 Education Street<br>Knowledge City, KN 12345</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="social-links">
+          <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      
+      <div class="contact-form-container">
+        <h2>Send a Message</h2>
+        <form class="contact-form" action="/contact" method="POST">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Frequently Asked Questions</h2>
+      <p>Find answers to common questions about Marius Guides</p>
+    </div>
+    
+    <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How do I create an account?</h3>
+          <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">
+          <p>To create an account, click on the "Register" button in the top right corner of the page. Fill out the registration form with your name, email address, and password, then click "Register" to create your account.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How can I create my own guide?</h3>
+          <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">
+          <p>To create a guide, you need to have an admin account. Once you have admin privileges, you can access the admin dashboard and click on "Create New Guide" to start creating your content.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>What types of content can I add to my guides?</h3>
+          <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">
+          <p>Marius Guides supports various types of content blocks, including text, images, videos, code snippets, markdown, and embedded content from external sources like YouTube or CodePen.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Is Marius Guides free to use?</h3>
+          <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, Marius Guides is free to use for both content creators and readers. We believe in making educational content accessible to everyone.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // FAQ toggle functionality
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
+  });
+</script> 

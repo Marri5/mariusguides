@@ -1,0 +1,108 @@
+<div class="admin-container">
+  <%- include('../../partials/admin-sidebar') %>
+  <link rel="stylesheet" href="/styles/admin.css">
+  <div class="admin-content">
+    <div class="admin-header">
+      <h1>Add Content Block</h1>
+      <p>Create a new content block for your guide</p>
+    </div>
+    
+    <form action="/admin/content-blocks/create" method="POST" enctype="multipart/form-data" class="admin-form">
+      <div class="form-group">
+        <label for="title">Block Title</label>
+        <input type="text" id="title" name="title" class="form-control" required>
+        <small>This will be displayed as a heading above your content</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="type">Content Type</label>
+        <select id="type" name="type" class="form-control" required>
+          <option value="">Select a content type</option>
+          <option value="text">Text</option>
+          <option value="image">Image</option>
+          <option value="video">Video</option>
+          <option value="code">Code</option>
+          <option value="markdown">Markdown</option>
+          <option value="embeddedContent">Embedded Content</option>
+        </select>
+        <small>Choose the type of content you want to add</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="guide">Guide</label>
+        <select id="guide" name="guide" class="form-control" required>
+          <option value="">Select a guide</option>
+          <% guides.forEach(guide => { %>
+            <option value="<%= guide._id %>" <%= guideId && guideId === guide._id.toString() ? 'selected' : '' %>>
+              <%= guide.title %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="position">Position</label>
+        <input type="number" id="position" name="position" class="form-control" value="0" min="0">
+        <small>The order in which this content appears (0 = first)</small>
+      </div>
+      
+      <div id="content-field" class="form-group">
+        <label for="content">Content</label>
+        <textarea id="content" name="content" class="form-control rich-editor" rows="10"></textarea>
+        <small id="content-help">Add your content here</small>
+      </div>
+      
+      <div id="media-field" class="form-group" style="display: none;">
+        <label for="media">Media File</label>
+        <input type="file" id="media" name="media" class="form-control">
+        <small id="media-help">Upload your image or video file</small>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Add Content Block</button>
+        <a href="javascript:history.back()" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const blockTypeSelect = document.getElementById('type');
+    const contentField = document.getElementById('content-field');
+    const mediaField = document.getElementById('media-field');
+    const contentHelp = document.getElementById('content-help');
+    
+    blockTypeSelect.addEventListener('change', function() {
+      const selectedType = this.value;
+      
+      if (['text', 'code', 'markdown', 'embeddedContent'].includes(selectedType)) {
+        contentField.style.display = 'block';
+        mediaField.style.display = 'none';
+        
+        // Update helper text based on type
+        if (selectedType === 'text') {
+          contentHelp.textContent = 'Add your text content here. You can use HTML formatting.';
+        } else if (selectedType === 'code') {
+          contentHelp.textContent = 'Add your code snippet here. It will be displayed in a code block with syntax highlighting.';
+        } else if (selectedType === 'markdown') {
+          contentHelp.textContent = 'Add your markdown content here.';
+        } else if (selectedType === 'embeddedContent') {
+          contentHelp.textContent = 'Add your embedded content here (e.g., YouTube iframe code).';
+        }
+      } else if (['image', 'video'].includes(selectedType)) {
+        contentField.style.display = 'none';
+        mediaField.style.display = 'block';
+        
+        if (selectedType === 'image') {
+          document.getElementById('media-help').textContent = 'Upload your image file (JPG, PNG, GIF).';
+        } else if (selectedType === 'video') {
+          document.getElementById('media-help').textContent = 'Upload your video file (MP4, WebM).';
+        }
+      } else {
+        contentField.style.display = 'none';
+        mediaField.style.display = 'none';
+      }
+    });
+  });
+</script> 

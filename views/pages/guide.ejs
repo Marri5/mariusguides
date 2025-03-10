@@ -1,0 +1,114 @@
+<div class="guide-header">
+  <div class="container">
+    <h1><%= guide.title %></h1>
+    <div class="guide-meta">
+      <div class="author">
+        <img src="<%= guide.author.avatar %>" alt="<%= guide.author.name %>" class="avatar">
+        <span>By <%= guide.author.name %></span>
+      </div>
+      <div class="date">
+        <i class="far fa-calendar-alt"></i>
+        <span><%= new Date(guide.createdAt).toLocaleDateString() %></span>
+      </div>
+      <% if (guide.tags && guide.tags.length > 0) { %>
+        <div class="tags">
+          <% guide.tags.forEach(tag => { %>
+            <span class="tag"><%= tag %></span>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<div class="guide-content-wrapper">
+  <div class="container">
+    <div class="guide-content">
+      <div class="guide-description">
+        <p><%= guide.description %></p>
+      </div>
+      
+      <% if (guide.contentBlocks && guide.contentBlocks.length > 0) { %>
+        <div class="content-blocks">
+          <% guide.contentBlocks.forEach(block => { %>
+            <div class="content-block" id="block-<%= block._id %>">
+              <h2><%= block.title %></h2>
+              
+              <% if (block.type === 'text') { %>
+                <div class="text-block">
+                  <%- block.content %>
+                </div>
+              <% } else if (block.type === 'image') { %>
+                <div class="image-block">
+                  <img src="<%= block.mediaUrl %>" alt="<%= block.title %>">
+                </div>
+              <% } else if (block.type === 'video') { %>
+                <div class="video-block">
+                  <video controls>
+                    <source src="<%= block.mediaUrl %>" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              <% } else if (block.type === 'code') { %>
+                <div class="code-block">
+                  <pre><code><%- block.content %></code></pre>
+                </div>
+              <% } else if (block.type === 'markdown') { %>
+                <div class="markdown-block">
+                  <%- block.content %>
+                </div>
+              <% } else if (block.type === 'embeddedContent') { %>
+                <div class="embedded-block">
+                  <%- block.content %>
+                </div>
+              <% } %>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="no-content">
+          <p>This guide has no content blocks yet.</p>
+        </div>
+      <% } %>
+      
+      <div class="author-bio">
+        <div class="author-header">
+          <img src="<%= guide.author.avatar %>" alt="<%= guide.author.name %>" class="avatar">
+          <h3>About the Author</h3>
+        </div>
+        <p><%= guide.author.bio || `${guide.author.name} is a contributor to Marius Guides.` %></p>
+      </div>
+    </div>
+    
+    <aside class="guide-sidebar">
+      <div class="sidebar-section">
+        <h3>Table of Contents</h3>
+        <ul class="toc">
+          <% if (guide.contentBlocks && guide.contentBlocks.length > 0) { %>
+            <% guide.contentBlocks.forEach(block => { %>
+              <li><a href="#block-<%= block._id %>"><%= block.title %></a></li>
+            <% }) %>
+          <% } else { %>
+            <li>No content blocks available</li>
+          <% } %>
+        </ul>
+      </div>
+      
+      <% if (relatedGuides && relatedGuides.length > 0) { %>
+        <div class="sidebar-section">
+          <h3>Related Guides</h3>
+          <ul class="related-guides">
+            <% relatedGuides.forEach(relatedGuide => { %>
+              <li>
+                <a href="/guides/<%= relatedGuide.slug %>">
+                  <img src="<%= relatedGuide.thumbnail %>" alt="<%= relatedGuide.title %>">
+                  <span><%= relatedGuide.title %></span>
+                </a>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
+    </aside>
+  </div>
+</div> 

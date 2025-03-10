@@ -1,0 +1,189 @@
+<div class="admin-container">
+  <%- include('../../partials/admin-sidebar') %>
+  
+  <div class="admin-content">
+    <div class="admin-header">
+      <h1>Create New Guide</h1>
+      <p>Start a new educational guide to share your knowledge</p>
+    </div>
+    
+    <div class="guide-creation-container">
+      <form action="/admin/guides/create" method="POST" enctype="multipart/form-data" class="admin-form">
+        
+        <div class="form-card">
+          <div class="card-header">
+            <i class="fas fa-info-circle"></i>
+            <h2>Basic Information</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label for="title">Guide Title</label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="Enter a descriptive title..." required>
+                <small>Choose a clear, descriptive title that summarizes your guide's content</small>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea id="description" name="description" class="form-control rich-editor" rows="6" placeholder="Describe what readers will learn from this guide..." required></textarea>
+              <small>Provide a brief overview that explains what your guide covers and why it's valuable</small>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="tags">Tags</label>
+                <div class="tag-input-container">
+                  <input type="text" id="tags" name="tags" class="form-control" placeholder="Add tags...">
+                  <div class="tag-suggestions" id="tagSuggestions"></div>
+                </div>
+                <small>Separate tags with commas (e.g., programming, javascript, beginner)</small>
+                <div class="tag-display" id="tagDisplay"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-card">
+          <div class="card-header">
+            <i class="fas fa-image"></i>
+            <h2>Visual Content</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="thumbnail">Thumbnail Image</label>
+              <div class="thumbnail-upload-container">
+                <div class="thumbnail-preview" id="thumbnailPreview">
+                  <div class="upload-placeholder">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to select or drag an image here</p>
+                  </div>
+                  <img id="previewImage" src="" alt="" style="display: none;">
+                </div>
+                <input type="file" id="thumbnail" name="thumbnail" class="form-control thumbnail-input" accept="image/*">
+              </div>
+              <small>Recommended size: 800x400 pixels, max 2MB. Use a high-quality image that represents your guide's content.</small>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-card">
+          <div class="card-header">
+            <i class="fas fa-cog"></i>
+            <h2>Publishing Options</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <div class="toggle-switch-container">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="published" name="published">
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <div class="toggle-label">
+                    <span>Publish immediately</span>
+                    <small>Toggle to publish your guide now or save as a draft</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <a href="/admin/guides" class="btn btn-outline">
+            <i class="fas fa-times"></i> Cancel
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Create Guide
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize rich text editor for description
+    if (typeof ClassicEditor !== 'undefined') {
+      ClassicEditor
+        .create(document.querySelector('#description'))
+        .catch(error => {
+          console.error('Error initializing rich text editor:', error);
+        });
+    }
+    
+    // Thumbnail preview
+    const thumbnailInput = document.getElementById('thumbnail');
+    const previewImage = document.getElementById('previewImage');
+    const uploadPlaceholder = document.querySelector('.upload-placeholder');
+    const thumbnailPreview = document.getElementById('thumbnailPreview');
+    
+    thumbnailPreview.addEventListener('click', function() {
+      thumbnailInput.click();
+    });
+    
+    thumbnailInput.addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          previewImage.src = e.target.result;
+          previewImage.style.display = 'block';
+          uploadPlaceholder.style.display = 'none';
+        }
+        
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+    
+    // Tag input handling
+    const tagInput = document.getElementById('tags');
+    const tagDisplay = document.getElementById('tagDisplay');
+    
+    tagInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        addTag();
+      }
+    });
+    
+    tagInput.addEventListener('blur', function() {
+      addTag();
+    });
+    
+    function addTag() {
+      const value = tagInput.value.trim();
+      if (value) {
+        const tags = value.split(',').filter(tag => tag.trim() !== '');
+        
+        tags.forEach(tag => {
+          const tagElement = document.createElement('span');
+          tagElement.className = 'tag-item';
+          tagElement.textContent = tag.trim();
+          
+          const removeBtn = document.createElement('span');
+          removeBtn.className = 'tag-remove';
+          removeBtn.innerHTML = '&times;';
+          removeBtn.addEventListener('click', function() {
+            tagElement.remove();
+            updateHiddenInput();
+          });
+          
+          tagElement.appendChild(removeBtn);
+          tagDisplay.appendChild(tagElement);
+        });
+        
+        tagInput.value = '';
+        updateHiddenInput();
+      }
+    }
+    
+    function updateHiddenInput() {
+      const tags = Array.from(tagDisplay.querySelectorAll('.tag-item'))
+        .map(tag => tag.textContent.slice(0, -1).trim());
+      tagInput.value = tags.join(', ');
+    }
+  });
+</script> 

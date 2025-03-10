@@ -1,0 +1,45 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Create an Account</h2>
+      <p>Join Marius Guides to access and create educational content</p>
+    </div>
+    
+    <% if (error) { %>
+      <div class="alert alert-danger">
+        <%= error %>
+      </div>
+    <% } %>
+    
+    <form action="/auth/register" method="POST" class="auth-form">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required minlength="6">
+        <small>Password must be at least 6 characters long</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+      </div>
+    </form>
+    
+    <div class="auth-footer">
+      <p>Already have an account? <a href="/auth/login">Login</a></p>
+    </div>
+  </div>
+</div> 

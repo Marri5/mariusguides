@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %>Marius Guides</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <% if (typeof currentPath !== 'undefined' && currentPath.startsWith('/admin')) { %>
+    <link rel="stylesheet" href="/css/admin.css">
+    <!-- Include Sortable.js for admin drag-and-drop functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <!-- Include CKEditor for rich text editing -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+  <% } %>
+</head>
+<body>
+  <%- include('../partials/header') %>
+  
+  <% if (typeof currentPath !== 'undefined' && currentPath.startsWith('/admin')) { %>
+    <main class="admin-main">
+      <%- body %>
+    </main>
+  <% } else { %>
+    <main class="container">
+      <%- body %>
+    </main>
+  <% } %>
+  
+  <%- include('../partials/footer') %>
+  
+  <script src="/js/main.js"></script>
+  <% if (typeof currentPath !== 'undefined' && currentPath.startsWith('/admin')) { %>
+    <script src="/js/admin.js"></script>
+  <% } %>
+</body>
+</html> 

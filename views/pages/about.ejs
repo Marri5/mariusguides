@@ -1,0 +1,67 @@
+<div class="page-header">
+  <div class="container">
+    <h1>About Marius Guides</h1>
+    <p>Learn more about our educational content management system</p>
+  </div>
+</div>
+
+<section class="about-section">
+  <div class="container">
+    <div class="about-content">
+      <div class="about-text">
+        <h2>Our Mission</h2>
+        <p>Marius Guides is dedicated to providing high-quality educational content that is accessible, engaging, and easy to understand. Our platform enables educators and content creators to build comprehensive guides on a wide range of topics.</p>
+        
+        <h2>What We Offer</h2>
+        <p>Our content management system allows creators to combine various types of content blocks - text, images, videos, code snippets, and more - to create rich, interactive learning experiences. Whether you're teaching programming, design, cooking, or any other skill, Marius Guides provides the tools you need to share your knowledge effectively.</p>
+        
+        <h2>Our Story</h2>
+        <p>Marius Guides was founded with a simple idea: learning should be accessible and engaging for everyone. We believe that the best educational content combines clear explanations with visual elements and interactive components. Our platform was built to make it easy for educators to create this type of content without needing technical expertise.</p>
+      </div>
+      
+      <div class="about-image">
+        <img src="/images/about-image.jpg" alt="Marius Guides Team" onerror="this.src='/images/default-thumbnail.jpg'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="team-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Our Team</h2>
+      <p>Meet the people behind Marius Guides</p>
+    </div>
+    
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="member-image">
+          <img src="/images/team/marius.jpg" alt="Marius" onerror="this.src='/images/default-avatar.png'">
+        </div>
+        <h3>Marius</h3>
+        <p class="member-role">Founder & CEO</p>
+        <p class="member-bio">Passionate about education and technology, Marius founded the platform to make learning more accessible.</p>
+      </div>
+      
+      <!-- Add more team members as needed -->
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Join Our Community</h2>
+      <p>Create an account to access all our guides or become a contributor</p>
+      <% if (typeof user !== 'undefined' && user) { %>
+        <% if (user.role === 'admin') { %>
+          <a href="/admin/guides/create" class="btn btn-primary">Create a Guide</a>
+        <% } else { %>
+          <a href="/contact" class="btn btn-primary">Become a Contributor</a>
+        <% } %>
+      <% } else { %>
+        <a href="/auth/register" class="btn btn-primary">Get Started</a>
+      <% } %>
+    </div>
+  </div>
+</section> 

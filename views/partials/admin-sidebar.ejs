@@ -1,0 +1,53 @@
+<div class="admin-sidebar">
+  <link rel="stylesheet" href="/css/admin.css">
+  <div class="sidebar-header">
+    <h2>Marius<span>Guides</span></h2>
+    <p>Content Management</p>
+  </div>
+  
+  <nav class="sidebar-nav">
+    <ul>
+      <li>
+        <a href="/admin" class="<%= currentPath === '/admin' ? 'active' : '' %>">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/guides" class="<%= currentPath.startsWith('/admin/guides') ? 'active' : '' %>">
+          <i class="fas fa-book"></i>
+          <span>Guides</span>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/content-blocks" class="<%= currentPath.startsWith('/admin/content-blocks') ? 'active' : '' %>">
+          <i class="fas fa-cubes"></i>
+          <span>Content Blocks</span>
+        </a>
+      </li>
+      <li class="sidebar-divider"></li>
+      <li>
+        <a href="/" target="_blank">
+          <i class="fas fa-home"></i>
+          <span>View Site</span>
+        </a>
+      </li>
+      <li>
+        <a href="/auth/profile">
+          <i class="fas fa-user"></i>
+          <span>My Profile</span>
+        </a>
+      </li>
+      <li>
+        <a href="/auth/logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  
+  <div class="sidebar-footer">
+    <p>&copy; <%= new Date().getFullYear() %> Marius Guides</p>
+  </div>
+</div> 

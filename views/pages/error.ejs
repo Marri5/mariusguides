@@ -1,0 +1,19 @@
+<div class="error-container">
+  <div class="error-content">
+    <h1>Oops!</h1>
+    <h2>Something went wrong</h2>
+    <p>We're sorry, but an error occurred while processing your request.</p>
+    
+    <% if (process.env.NODE_ENV === 'development' && error) { %>
+      <div class="error-details">
+        <h3>Error Details</h3>
+        <pre><%= error.stack || error.message || JSON.stringify(error, null, 2) %></pre>
+      </div>
+    <% } %>
+    
+    <div class="error-actions">
+      <a href="/" class="btn btn-primary">Go to Homepage</a>
+      <a href="javascript:history.back()" class="btn btn-outline">Go Back</a>
+    </div>
+  </div>
+</div> 

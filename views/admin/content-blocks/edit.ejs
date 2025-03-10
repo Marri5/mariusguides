@@ -1,0 +1,89 @@
+<div class="admin-container">
+  <%- include('../../partials/admin-sidebar') %>
+  
+  <div class="admin-content">
+    <div class="admin-header">
+      <h1>Edit Content Block</h1>
+      <p>Update your content block</p>
+    </div>
+    
+    <form action="/admin/content-blocks/<%= contentBlock._id %>?_method=PUT" method="POST" enctype="multipart/form-data" class="admin-form">
+      <div class="form-group">
+        <label for="title">Block Title</label>
+        <input type="text" id="title" name="title" class="form-control" value="<%= contentBlock.title %>" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="type">Content Type</label>
+        <select id="type" name="type" class="form-control" required disabled>
+          <option value="text" <%= contentBlock.type === 'text' ? 'selected' : '' %>>Text</option>
+          <option value="image" <%= contentBlock.type === 'image' ? 'selected' : '' %>>Image</option>
+          <option value="video" <%= contentBlock.type === 'video' ? 'selected' : '' %>>Video</option>
+          <option value="code" <%= contentBlock.type === 'code' ? 'selected' : '' %>>Code</option>
+          <option value="markdown" <%= contentBlock.type === 'markdown' ? 'selected' : '' %>>Markdown</option>
+          <option value="embeddedContent" <%= contentBlock.type === 'embeddedContent' ? 'selected' : '' %>>Embedded Content</option>
+        </select>
+        <small>Content type cannot be changed after creation</small>
+        <input type="hidden" name="type" value="<%= contentBlock.type %>" />
+      </div>
+      
+      <div class="form-group">
+        <label for="guide">Guide</label>
+        <select id="guide" name="guide" class="form-control" required>
+          <% guides.forEach(guide => { %>
+            <option value="<%= guide._id %>" <%= contentBlock.guide.toString() === guide._id.toString() ? 'selected' : '' %>>
+              <%= guide.title %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="position">Position</label>
+        <input type="number" id="position" name="position" class="form-control" value="<%= contentBlock.position %>" min="0">
+      </div>
+      
+      <% if (['text', 'code', 'markdown', 'embeddedContent'].includes(contentBlock.type)) { %>
+        <div id="content-field" class="form-group">
+          <label for="content">Content</label>
+          <textarea id="content" name="content" class="form-control <%= contentBlock.type === 'text' ? 'rich-editor' : '' %>" rows="10"><%= contentBlock.content %></textarea>
+        </div>
+      <% } else if (['image', 'video'].includes(contentBlock.type)) { %>
+        <div id="media-field" class="form-group">
+          <label for="media">Media File</label>
+          <% if (contentBlock.mediaUrl) { %>
+            <div class="current-media">
+              <% if (contentBlock.type === 'image') { %>
+                <img src="<%= contentBlock.mediaUrl %>" alt="<%= contentBlock.title %>" style="max-width: 300px; margin-bottom: 10px;">
+              <% } else { %>
+                <video src="<%= contentBlock.mediaUrl %>" controls style="max-width: 300px; margin-bottom: 10px;"></video>
+              <% } %>
+              <p>Current <%= contentBlock.type %></p>
+            </div>
+          <% } %>
+          <input type="file" id="media" name="media" class="form-control">
+          <small>Leave empty to keep current media</small>
+        </div>
+      <% } %>
+      
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Update Content Block</button>
+        <a href="/admin/guides/<%= contentBlock.guide %>/edit" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize rich text editor if available and if content type is text
+    const contentTextarea = document.getElementById('content');
+    if (contentTextarea && contentTextarea.classList.contains('rich-editor') && typeof ClassicEditor !== 'undefined') {
+      ClassicEditor
+        .create(contentTextarea)
+        .catch(error => {
+          console.error('Error initializing rich text editor:', error);
+        });
+    }
+  });
+</script> 
