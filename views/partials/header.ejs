@@ -12,14 +12,14 @@
           <li><a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">Home</a></li>
           <li><a href="/about" class="<%= currentPath === '/about' ? 'active' : '' %>">About</a></li>
           <li><a href="/contact" class="<%= currentPath === '/contact' ? 'active' : '' %>">Contact</a></li>
-          <% if (user && user.role === 'admin') { %>
+          <% if (typeof user !== 'undefined' && user && user.role === 'admin') { %>
             <li><a href="/admin" class="<%= currentPath.startsWith('/admin') ? 'active' : '' %>">Admin</a></li>
           <% } %>
         </ul>
       </nav>
       
       <div class="user-actions">
-        <% if (user) { %>
+        <% if (typeof user !== 'undefined' && user) { %>
           <div class="user-menu">
             <button class="user-menu-btn">
               <img src="<%= user.avatar %>" alt="<%= user.name %>" class="avatar">
@@ -54,7 +54,7 @@
     <li><a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">Home</a></li>
     <li><a href="/about" class="<%= currentPath === '/about' ? 'active' : '' %>">About</a></li>
     <li><a href="/contact" class="<%= currentPath === '/contact' ? 'active' : '' %>">Contact</a></li>
-    <% if (user) { %>
+    <% if (typeof user !== 'undefined' && user) { %>
       <li><a href="/auth/profile">Profile</a></li>
       <% if (user.role === 'admin') { %>
         <li><a href="/admin">Admin</a></li>
